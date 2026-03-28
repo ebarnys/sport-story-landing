@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 40" fill="none">
+  <!-- GPS pin shape -->
+  <path d="M16 1C7.716 1 1 7.716 1 16C1 24 6 31 16 39C26 31 31 24 31 16C31 7.716 24.284 1 16 1Z" fill="#C8FF00"/>
+  <!-- Route trace inside -->
+  <path d="M8 22C8 15 12 12 16 15C20 18 23 14 23 11" stroke="#07090D" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Start dot (finish line) -->
+  <circle cx="8" cy="22" r="2.2" fill="#07090D"/>
+  <!-- End dot (start line) -->
+  <circle cx="23" cy="11" r="2.2" fill="#07090D"/>
+</svg>

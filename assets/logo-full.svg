@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 40" fill="none">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@900&amp;display=swap');
+    </style>
+  </defs>
+
+  <!-- GPS pin icon -->
+  <path d="M16 1C7.716 1 1 7.716 1 16C1 24 6 31 16 39C26 31 31 24 31 16C31 7.716 24.284 1 16 1Z" fill="#C8FF00"/>
+  <path d="M8 22C8 15 12 12 16 15C20 18 23 14 23 11" stroke="#07090D" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="8" cy="22" r="2.2" fill="#07090D"/>
+  <circle cx="23" cy="11" r="2.2" fill="#07090D"/>
+
+  <!-- Wordmark: SPORT-STORY (dark bg / light text variant) -->
+  <text x="44" y="26.5"
+        font-family="Inter, system-ui, -apple-system, sans-serif"
+        font-weight="900"
+        font-size="17"
+        letter-spacing="-0.4"
+        fill="#F2F4F8">SPORT<tspan fill="#C8FF00">-STORY</tspan></text>
+</svg>

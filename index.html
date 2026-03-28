@@ -1,0 +1,1700 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SPORT-STORY.CZ – Zvěčni svůj závod v Plzni</title>
+  <meta name="description" content="Vytvoř si personalizovaný plakát se svou závodní trasou, časem a výkonem. Edice Plzeň 2025." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:         #07090D;
+      --bg2:        #0C0F15;
+      --bg3:        #11151D;
+      --surface:    #171D28;
+      --surface2:   #1E2637;
+      --border:     rgba(255,255,255,0.06);
+      --accent:     #C8FF00;
+      --accent-dim: rgba(200,255,0,0.10);
+      --accent-glow:rgba(200,255,0,0.25);
+      --orange:     #FF5E1A;
+      --orange-dim: rgba(255,94,26,0.12);
+      --blue:       #00D9FF;
+      --blue-dim:   rgba(0,217,255,0.10);
+      --text:       #E8EEF6;
+      --muted:      #68788F;
+      --muted2:     #3D4D61;
+      --radius:     14px;
+      --radius-lg:  22px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* ── NOISE TEXTURE ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+      opacity: 0.025;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── NAVBAR ── */
+    .site-nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      background: rgba(7,9,13,0.72);
+      backdrop-filter: blur(18px) saturate(1.4);
+      -webkit-backdrop-filter: blur(18px) saturate(1.4);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      transition: background 0.3s ease;
+    }
+    .site-nav.scrolled {
+      background: rgba(7,9,13,0.95);
+    }
+    .nav-inner {
+      width: 100%;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      flex-shrink: 0;
+    }
+    .nav-logo svg { display: block; }
+    .nav-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--accent);
+      color: #07090D;
+      font-weight: 800;
+      font-size: 13px;
+      padding: 10px 22px;
+      border-radius: 100px;
+      text-decoration: none;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+      white-space: nowrap;
+    }
+    .nav-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(200,255,0,0.35);
+    }
+
+    /* ── UTILS ── */
+    .container { width: 100%; max-width: 1100px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+    .section    { padding: 96px 0; }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: var(--accent-dim);
+      border: 1px solid rgba(200,255,0,0.2);
+      border-radius: 100px;
+      padding: 5px 14px;
+      margin-bottom: 20px;
+    }
+
+    /* ── CTA BUTTON ── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--accent);
+      color: #07090D;
+      font-weight: 800;
+      font-size: 15px;
+      padding: 15px 32px;
+      border-radius: 100px;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+      position: relative;
+      z-index: 1;
+    }
+    .btn:hover {
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 12px 48px rgba(200,255,0,0.4);
+    }
+    .btn-lg { font-size: 18px; padding: 20px 48px; }
+    .btn-arrow {
+      width: 32px; height: 32px;
+      background: rgba(0,0,0,0.15);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+
+    /* ── SCROLL ANIMATION BASE ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.55s ease, transform 0.55s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+
+    /* ═══════════════════════════════════════
+       1. HERO
+    ═══════════════════════════════════════ */
+    .hero {
+      position: relative;
+      min-height: 100svh;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      padding: 124px 0 60px;
+      background-image: url('assets/background-ver1.jpg');
+      background-size: cover;
+      background-position: center 30%;
+    }
+
+    /* Dark overlay */
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        105deg,
+        rgba(7,9,13,0.92) 0%,
+        rgba(7,9,13,0.78) 45%,
+        rgba(7,9,13,0.60) 100%
+      );
+      pointer-events: none;
+      z-index: 0;
+    }
+    /* Accent glow (right side) */
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(0,217,255,0.04) 0%, transparent 65%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* SVG route decoration */
+    .hero-route-svg {
+      position: absolute;
+      top: 50%; right: 2%;
+      transform: translateY(-50%);
+      width: 55%;
+      max-width: 680px;
+      opacity: 0.06;
+      pointer-events: none;
+    }
+    .hero-route-svg path {
+      stroke-dasharray: 2000;
+      stroke-dashoffset: 2000;
+      animation: drawRoute 3s ease forwards 0.5s;
+    }
+    @keyframes drawRoute {
+      to { stroke-dashoffset: 0; }
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 55fr 45fr;
+      gap: 56px;
+      align-items: center;
+      width: 100%;
+    }
+
+    /* ── Hero left ── */
+    .hero-eyebrow {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .hero-eyebrow-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--blue);
+      animation: blink 2s infinite;
+    }
+    @keyframes blink {
+      0%,100% { opacity: 1; }
+      50%       { opacity: 0.3; }
+    }
+
+    .hero h1 {
+      font-size: clamp(40px, 6.5vw, 72px);
+      font-weight: 900;
+      line-height: 1.0;
+      letter-spacing: -0.03em;
+      margin-bottom: 22px;
+      position: relative;
+      z-index: 1;
+    }
+    .hero h1 .line-accent {
+      color: var(--accent);
+      display: block;
+    }
+
+    .hero-sub {
+      font-size: 17px;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 36px;
+      max-width: 400px;
+    }
+
+    .hero-cta-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 36px;
+      flex-wrap: wrap;
+    }
+
+    .hero-note {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    /* Feature chips */
+    .hero-chips {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 6px 14px;
+    }
+    .chip-dot {
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--accent);
+      flex-shrink: 0;
+    }
+
+    /* ── Hero right ── */
+    .hero-visual {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .hero-img-wrap {
+      position: relative;
+      display: inline-block;
+    }
+    .hero-img-wrap img {
+      width: 100%;
+      max-width: 460px;
+      display: block;
+    }
+
+    .hero-badge {
+      position: absolute;
+      bottom: -18px;
+      left: 16px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 10px 18px 10px 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      white-space: nowrap;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+      z-index: 2;
+    }
+    .badge-pulse {
+      width: 8px; height: 8px;
+      background: var(--accent);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%,100% { opacity: 1; transform: scale(1); box-shadow: 0 0 0 0 rgba(200,255,0,0.4); }
+      50%      { opacity: 0.8; transform: scale(1.2); box-shadow: 0 0 0 6px rgba(200,255,0,0); }
+    }
+
+    .hero-stat-badge {
+      position: absolute;
+      top: 20px;
+      right: -10px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 12px 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+      z-index: 2;
+    }
+    .stat-badge-num {
+      font-size: 22px;
+      font-weight: 900;
+      color: var(--accent);
+      line-height: 1;
+    }
+    .stat-badge-label {
+      font-size: 10px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-top: 3px;
+    }
+
+    /* ═══════════════════════════════════════
+       TICKER
+    ═══════════════════════════════════════ */
+    .ticker {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 0;
+      overflow: hidden;
+      position: relative;
+      z-index: 1;
+    }
+    .ticker-track {
+      display: flex;
+      gap: 0;
+      width: max-content;
+      animation: ticker 28s linear infinite;
+    }
+    .ticker-track:hover { animation-play-state: paused; }
+    @keyframes ticker {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    .ticker-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0 32px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+    .ticker-item strong { color: var(--text); }
+    .ticker-sep {
+      display: inline-block;
+      width: 4px; height: 4px;
+      border-radius: 50%;
+      background: var(--accent);
+      flex-shrink: 0;
+    }
+
+    /* ═══════════════════════════════════════
+       STATS BAR
+    ═══════════════════════════════════════ */
+    .stats-bar {
+      padding: 56px 0;
+      background: var(--bg2);
+      border-bottom: 1px solid var(--border);
+    }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+    }
+    .stat-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 0 24px;
+      position: relative;
+    }
+    .stat-item + .stat-item::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      height: 48px;
+      width: 1px;
+      background: var(--border);
+    }
+    .stat-num {
+      font-size: clamp(16px, 2vw, 20px);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+    .stat-label {
+      font-size: 14px;
+      color: var(--muted);
+      font-weight: 400;
+    }
+
+    /* ═══════════════════════════════════════
+       2. VALUE PROPS
+    ═══════════════════════════════════════ */
+    .value { background: var(--bg); }
+
+    .section-header { text-align: center; margin-bottom: 56px; }
+    .section-header h2 {
+      font-size: clamp(28px, 4.5vw, 48px);
+      font-weight: 900;
+      letter-spacing: -0.025em;
+      line-height: 1.1;
+      margin-bottom: 14px;
+    }
+    .section-header p {
+      font-size: 16px;
+      color: var(--muted);
+      max-width: 500px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    .value-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .value-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 3px solid transparent;
+      border-radius: var(--radius-lg);
+      padding: 36px 30px;
+      transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+    .value-card::before {
+      content: '';
+      position: absolute;
+      top: 0; right: 0;
+      width: 120px; height: 120px;
+      background: radial-gradient(circle, var(--accent-dim) 0%, transparent 70%);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .value-card:hover {
+      border-left-color: var(--accent);
+      transform: translateY(-5px);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    }
+    .value-card:hover::before { opacity: 1; }
+    .value-icon {
+      font-size: 40px;
+      margin-bottom: 20px;
+      display: block;
+    }
+    .value-card h3 {
+      font-size: 18px;
+      font-weight: 800;
+      margin-bottom: 10px;
+      letter-spacing: -0.01em;
+    }
+    .value-card p {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    /* ═══════════════════════════════════════
+       3. PRODUCT SHOWCASE
+    ═══════════════════════════════════════ */
+    .showcase { background: var(--bg2); }
+    .showcase .container { max-width: 1480px; }
+
+    .showcase-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .showcase-item {
+      display: block;
+      text-decoration: none;
+      color: inherit;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .showcase-item:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 24px 64px rgba(0,0,0,0.5);
+      border-color: rgba(200,255,0,0.15);
+    }
+
+    /* Variant switcher */
+    .showcase-switcher {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      margin-bottom: 40px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 4px;
+      width: fit-content;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .switcher-btn {
+      padding: 8px 24px;
+      border-radius: 100px;
+      border: none;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      background: transparent;
+      color: var(--muted);
+      transition: background 0.2s, color 0.2s;
+    }
+    .switcher-btn.active {
+      background: var(--accent);
+      color: #07090D;
+    }
+
+    /* Single variant */
+    .showcase-img-wrap {
+      position: relative;
+      overflow: hidden;
+    }
+    .showcase-variant {
+      overflow: hidden;
+      position: relative;
+    }
+    .showcase-variant--light { background: #e8e8e4; }
+    .showcase-variant--dark  { background: #0d1017; }
+    .showcase-variant img {
+      width: 100%;
+      height: 420px;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+      transition: transform 0.5s ease, opacity 0.3s ease;
+    }
+    .showcase-item:hover .showcase-variant img { transform: scale(1.04); }
+    .variant-tag {
+      position: absolute;
+      bottom: 10px;
+      left: 10px;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      background: rgba(7,9,13,0.65);
+      backdrop-filter: blur(6px);
+      color: rgba(255,255,255,0.65);
+      padding: 3px 8px;
+      border-radius: 100px;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    /* Pill badge */
+    .showcase-pill {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: rgba(7,9,13,0.82);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 100px;
+      padding: 4px 11px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      z-index: 2;
+    }
+
+    /* Distance badge */
+    .showcase-dist {
+      position: absolute;
+      bottom: 12px;
+      right: 12px;
+      background: var(--accent);
+      color: #07090D;
+      font-size: 11px;
+      font-weight: 900;
+      padding: 4px 11px;
+      border-radius: 100px;
+      z-index: 2;
+      letter-spacing: 0.04em;
+    }
+
+    .showcase-info {
+      padding: 20px 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .showcase-title {
+      font-size: 16px;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+    }
+    .showcase-meta {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 3px;
+    }
+    .showcase-arrow {
+      width: 34px; height: 34px;
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--muted);
+      flex-shrink: 0;
+      transition: background 0.2s, border-color 0.2s, color 0.2s;
+      font-size: 14px;
+    }
+    .showcase-item:hover .showcase-arrow {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #07090D;
+    }
+
+    /* ═══════════════════════════════════════
+       4. HOW IT WORKS — TIMELINE
+    ═══════════════════════════════════════ */
+    .how { background: var(--bg); }
+
+    .steps-timeline {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      padding-top: 20px;
+    }
+
+    /* Connecting route line */
+    .steps-timeline::before {
+      content: '';
+      position: absolute;
+      top: 52px;
+      left: calc(16.66% + 28px);
+      right: calc(16.66% + 28px);
+      height: 2px;
+      background: repeating-linear-gradient(
+        90deg,
+        var(--accent) 0, var(--accent) 6px,
+        transparent 6px, transparent 14px
+      );
+      opacity: 0.4;
+    }
+
+    .step {
+      text-align: center;
+      padding: 0 28px;
+      position: relative;
+    }
+
+    .step-icon-wrap {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 28px;
+    }
+    .step-num {
+      width: 64px; height: 64px;
+      border-radius: 50%;
+      border: 2px solid rgba(200,255,0,0.3);
+      background: var(--surface);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 24px;
+      font-weight: 900;
+      color: var(--accent);
+      position: relative;
+      z-index: 1;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .step:hover .step-num {
+      background: var(--accent-dim);
+      border-color: var(--accent);
+    }
+    .step-num-glow {
+      position: absolute;
+      inset: -8px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(200,255,0,0.15) 0%, transparent 70%);
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    .step:hover .step-num-glow { opacity: 1; }
+
+    .step-emoji {
+      font-size: 20px;
+      display: block;
+      margin-bottom: 8px;
+    }
+    .step h3 {
+      font-size: 18px;
+      font-weight: 800;
+      margin-bottom: 10px;
+      letter-spacing: -0.01em;
+    }
+    .step p { font-size: 14px; color: var(--muted); line-height: 1.7; }
+
+    /* ═══════════════════════════════════════
+       5. PRODUCT DETAILS
+    ═══════════════════════════════════════ */
+    .details { background: var(--bg2); }
+
+    .details-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 72px;
+      align-items: center;
+    }
+
+    .details-visual {
+      position: relative;
+    }
+    .details-visual::before {
+      content: 'A3';
+      position: absolute;
+      right: -20px;
+      bottom: -20px;
+      font-size: 180px;
+      font-weight: 900;
+      letter-spacing: -0.05em;
+      color: var(--accent);
+      opacity: 0.04;
+      line-height: 1;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .details-visual img {
+      width: 100%;
+      border-radius: var(--radius-lg);
+      position: relative;
+      z-index: 1;
+      box-shadow:
+        0 0 0 1px rgba(255,255,255,0.05),
+        0 40px 80px rgba(0,0,0,0.5);
+      transition: transform 0.4s ease;
+    }
+    .details-visual:hover img { transform: scale(1.02); }
+
+    .details-content h2 {
+      font-size: clamp(26px, 3.5vw, 40px);
+      font-weight: 900;
+      letter-spacing: -0.025em;
+      line-height: 1.1;
+      margin-bottom: 32px;
+    }
+
+    .feature-chips {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .feature-chip {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px 20px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .feature-chip:hover {
+      border-color: rgba(200,255,0,0.25);
+      transform: translateX(4px);
+    }
+    .feature-chip-icon {
+      width: 40px; height: 40px;
+      background: var(--accent-dim);
+      border: 1px solid rgba(200,255,0,0.15);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+    .feature-chip-text strong {
+      display: block;
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 2px;
+    }
+    .feature-chip-text span {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    /* ═══════════════════════════════════════
+       6. MAIN CTA
+    ═══════════════════════════════════════ */
+    .cta-section {
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+      padding: 120px 0;
+      background: var(--bg);
+    }
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 800px; height: 600px;
+      background: radial-gradient(ellipse, rgba(200,255,0,0.08) 0%, transparent 65%);
+      pointer-events: none;
+    }
+
+    .cta-section h2 {
+      font-size: clamp(36px, 6vw, 64px);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      line-height: 1.0;
+      margin-bottom: 14px;
+      position: relative;
+    }
+    .cta-section .cta-sub {
+      font-size: 17px;
+      color: var(--muted);
+      margin-bottom: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      position: relative;
+    }
+    .cta-timer {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--blue);
+      background: var(--blue-dim);
+      border: 1px solid rgba(0,217,255,0.2);
+      border-radius: 100px;
+      padding: 4px 12px;
+      margin-left: 8px;
+    }
+
+    /* Pulsing ring around CTA button */
+    .btn-wrap {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+      position: relative;
+    }
+    .btn-microcopy {
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 500;
+      padding-left: 4px;
+    }
+    .btn-wrap::before {
+      content: '';
+      position: absolute;
+      inset: -8px;
+      border-radius: 100px;
+      border: 2px solid rgba(200,255,0,0.3);
+      animation: ring 2.5s ease infinite;
+    }
+    @keyframes ring {
+      0%   { transform: scale(0.95); opacity: 0.5; }
+      50%  { transform: scale(1.05); opacity: 0.15; }
+      100% { transform: scale(0.95); opacity: 0.5; }
+    }
+
+    .cta-edition {
+      margin-top: 24px;
+      font-size: 13px;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .cta-edition::before,
+    .cta-edition::after {
+      content: '';
+      display: block;
+      width: 32px; height: 1px;
+      background: var(--muted2);
+    }
+
+    /* ═══════════════════════════════════════
+       7. OFFER
+    ═══════════════════════════════════════ */
+    .offer { background: var(--bg2); padding: 56px 0; }
+
+    .offer-inner {
+      background: linear-gradient(135deg,
+        rgba(200,255,0,0.07) 0%,
+        rgba(0,217,255,0.04) 60%,
+        transparent 100%
+      );
+      border: 1px solid rgba(200,255,0,0.15);
+      border-radius: var(--radius-lg);
+      padding: 44px 52px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 32px;
+      position: relative;
+      overflow: hidden;
+    }
+    .offer-inner::before {
+      content: '';
+      position: absolute;
+      top: -40px; right: -40px;
+      width: 200px; height: 200px;
+      background: radial-gradient(circle, rgba(200,255,0,0.08) 0%, transparent 70%);
+    }
+
+    .offer-left { display: flex; align-items: center; gap: 22px; }
+    .offer-emoji { font-size: 44px; flex-shrink: 0; }
+    .offer-text strong { display: block; font-size: 21px; font-weight: 800; margin-bottom: 5px; letter-spacing: -0.01em; }
+    .offer-text span { font-size: 14px; color: var(--muted); }
+
+    .offer-right { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; flex-shrink: 0; }
+    .offer-code {
+      background: var(--bg);
+      border: 2px dashed rgba(200,255,0,0.45);
+      border-radius: 12px;
+      padding: 14px 28px;
+      font-size: 24px;
+      font-weight: 900;
+      color: var(--accent);
+      letter-spacing: 0.12em;
+    }
+    .offer-desc { font-size: 12px; color: var(--muted); }
+
+    /* ═══════════════════════════════════════
+       8. FAQ
+    ═══════════════════════════════════════ */
+    .faq { background: var(--bg); }
+
+    .faq-list { max-width: 760px; margin: 0 auto; display: flex; flex-direction: column; gap: 10px; }
+
+    .faq-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: border-color 0.2s;
+    }
+    .faq-item.open { border-color: rgba(200,255,0,0.2); }
+
+    .faq-question {
+      width: 100%;
+      background: none;
+      border: none;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 16px;
+      font-weight: 700;
+      padding: 22px 24px;
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      transition: background 0.2s;
+    }
+    .faq-question:hover { background: rgba(255,255,255,0.02); }
+    .faq-chevron {
+      width: 28px; height: 28px; flex-shrink: 0;
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px;
+      color: var(--muted);
+      transition: transform 0.3s ease, background 0.2s, border-color 0.2s, color 0.2s;
+    }
+    .faq-item.open .faq-chevron {
+      transform: rotate(180deg);
+      background: var(--accent-dim);
+      border-color: rgba(200,255,0,0.35);
+      color: var(--accent);
+    }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s ease;
+    }
+    .faq-item.open .faq-answer { max-height: 200px; }
+    .faq-answer p {
+      padding: 0 24px 24px;
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.75;
+    }
+
+    /* ═══════════════════════════════════════
+       9. FOOTER
+    ═══════════════════════════════════════ */
+    .footer {
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+      padding: 52px 0 40px;
+    }
+    .footer-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 18px;
+      text-align: center;
+    }
+    .footer-logo {
+      font-size: 20px;
+      font-weight: 900;
+      letter-spacing: 0.04em;
+    }
+    .footer-logo .accent { color: var(--accent); }
+    .footer-desc {
+      font-size: 14px;
+      color: var(--muted);
+      max-width: 420px;
+      line-height: 1.7;
+    }
+    .footer-divider {
+      width: 40px; height: 2px;
+      background: var(--muted2);
+      border-radius: 2px;
+    }
+    .footer-contact { font-size: 14px; color: var(--muted); }
+    .footer-contact a { color: var(--blue); text-decoration: none; }
+    .footer-contact a:hover { text-decoration: underline; }
+    .footer-copy { font-size: 12px; color: var(--muted2); }
+
+    /* ═══════════════════════════════════════
+       RESPONSIVE
+    ═══════════════════════════════════════ */
+    @media (max-width: 900px) {
+      .section { padding: 72px 0; }
+
+      .hero { min-height: auto; padding: 72px 0 56px; }
+      .hero-grid { grid-template-columns: 1fr; gap: 48px; text-align: center; }
+      .hero-eyebrow { justify-content: center; }
+      .hero-sub { max-width: 100%; }
+      .hero-cta-row { justify-content: center; }
+      .hero-chips { justify-content: center; }
+      .hero-visual { order: -1; }
+      .hero-img-wrap img { max-width: 360px; }
+      .hero-stat-badge { right: 0; }
+      .hero-badge { left: 50%; transform: translateX(-50%); bottom: -22px; }
+
+      .stats-grid { grid-template-columns: repeat(3,1fr); gap: 0; }
+
+      .value-grid { grid-template-columns: 1fr; }
+
+      .showcase-grid { grid-template-columns: 1fr; }
+      .showcase-variant img { height: 300px; }
+
+      .steps-timeline { grid-template-columns: 1fr; gap: 40px; }
+      .steps-timeline::before { display: none; }
+      .step { padding: 0; }
+
+      .details-grid { grid-template-columns: 1fr; gap: 48px; }
+      .details-visual { order: -1; }
+      .details-visual::before { display: none; }
+
+      .offer-inner { flex-direction: column; text-align: center; padding: 36px 28px; }
+      .offer-left { flex-direction: column; text-align: center; }
+      .offer-right { align-items: center; }
+    }
+
+    @media (max-width: 540px) {
+      .stats-grid { grid-template-columns: 1fr; gap: 28px; }
+      .stat-item + .stat-item::before { display: none; }
+      .btn-lg { font-size: 16px; padding: 18px 36px; }
+      .hero h1 { font-size: 34px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════
+     NAVBAR
+══════════════════════════════════════ -->
+<nav class="site-nav" id="site-nav">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo" aria-label="SPORT-STORY.CZ – domů">
+      <svg viewBox="0 0 192 40" xmlns="http://www.w3.org/2000/svg" fill="none" style="height:32px;width:auto;">
+        <path d="M16 1C7.716 1 1 7.716 1 16C1 24 6 31 16 39C26 31 31 24 31 16C31 7.716 24.284 1 16 1Z" fill="#C8FF00"/>
+        <path d="M8 22C8 15 12 12 16 15C20 18 23 14 23 11" stroke="#07090D" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="8" cy="22" r="2.2" fill="#07090D"/>
+        <circle cx="23" cy="11" r="2.2" fill="#07090D"/>
+        <text x="44" y="26.5" font-family="Inter, system-ui, -apple-system, sans-serif" font-weight="900" font-size="17" letter-spacing="-0.4" fill="#F2F4F8">SPORT<tspan fill="#C8FF00">-STORY</tspan></text>
+      </svg>
+    </a>
+    <a href="https://www.sport-story.cz/zavodni-plakat-v-ramu---pulmaraton-plzen-2026/" target="_blank" rel="noopener" class="nav-cta">Vytvořit plakát →</a>
+  </div>
+</nav>
+
+<!-- ══════════════════════════════════════
+     1. HERO
+══════════════════════════════════════ -->
+<section class="hero">
+
+  <!-- Decorative route SVG -->
+  <svg class="hero-route-svg" viewBox="0 0 700 500" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <path d="M 40 460 C 70 420, 110 380, 160 350 C 210 320, 240 290, 270 260 C 300 230, 310 200, 340 175 C 370 150, 410 140, 450 135 C 490 130, 530 145, 560 165 C 590 185, 610 215, 620 248 C 630 281, 620 316, 600 342 C 580 368, 548 385, 515 395 C 482 405, 448 405, 420 398 C 392 391, 368 376, 350 360 C 332 344, 320 324, 315 304 C 310 284, 316 262, 328 248 C 340 234, 360 228, 382 230 C 404 232, 428 243, 444 260"
+          stroke="#C8FF00" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- route dots -->
+    <circle cx="40"  cy="460" r="6" fill="#C8FF00"/>
+    <circle cx="270" cy="260" r="4" fill="#C8FF00" opacity="0.6"/>
+    <circle cx="450" cy="135" r="4" fill="#C8FF00" opacity="0.6"/>
+    <circle cx="620" cy="248" r="4" fill="#C8FF00" opacity="0.6"/>
+    <circle cx="444" cy="260" r="7" fill="#00D9FF" opacity="0.8"/>
+    <!-- finish flag placeholder -->
+    <line x1="444" y1="260" x2="444" y2="220" stroke="#00D9FF" stroke-width="2" opacity="0.7"/>
+    <rect x="444" y="210" width="22" height="14" fill="#00D9FF" opacity="0.6"/>
+  </svg>
+
+  <div class="container">
+    <div class="hero-grid">
+
+      <!-- Left: content -->
+      <div class="hero-content">
+        <div class="hero-eyebrow">
+          <span class="hero-eyebrow-dot"></span>
+          Edice Plzeň 2025
+        </div>
+        <h1>
+          Tenhle závod si<br>zaslouží místo
+          <span class="line-accent">na zdi.</span>
+        </h1>
+        <p class="hero-sub">
+          Vytvoř si personalizovaný plakát s trasou, časem a tvým výkonem z Plzně.
+        </p>
+        <div class="hero-cta-row">
+          <div class="btn-wrap">
+            <a href="https://www.sport-story.cz/zavodni-plakat-v-ramu---pulmaraton-plzen-2026/" target="_blank" rel="noopener" class="btn btn-lg">
+              Vytvořit plakát
+              <span class="btn-arrow">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </span>
+            </a>
+            <span class="btn-microcopy">Zabere to méně než 2 minuty</span>
+          </div>
+        </div>
+        <div class="hero-chips">
+          <span class="chip"><span class="chip-dot"></span>Formát A3</span>
+          <span class="chip"><span class="chip-dot"></span>Prémiový plakát v rámu</span>
+          <span class="chip"><span class="chip-dot"></span>Tvoje jméno &amp; čas</span>
+        </div>
+      </div>
+
+      <!-- Right: product visual -->
+      <div class="hero-visual">
+        <div class="hero-img-wrap">
+          <img src="assets/product-hero.png" alt="SPORT-STORY personalizovaný závodní plakát – Plzeňský půlmaraton" loading="eager" />
+          <div class="hero-badge">
+            <span class="badge-pulse"></span>
+            Limitovaná edice Plzeň
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     TICKER
+══════════════════════════════════════ -->
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-track">
+    <!-- First copy -->
+    <div class="ticker-item"><strong>Půlmaraton Plzeň</strong><span class="ticker-sep"></span>21,1 km</div>
+    <div class="ticker-item"><strong>10 km OMEXOM</strong><span class="ticker-sep"></span>Plzeň 2025</div>
+    <div class="ticker-item"><strong>5 km LEAR</strong><span class="ticker-sep"></span>Plzeň 2025</div>
+    <div class="ticker-item"><strong>Osobní rekord</strong><span class="ticker-sep"></span>Navždy tvůj</div>
+    <div class="ticker-item"><strong>Půlmaraton Plzeň</strong><span class="ticker-sep"></span>21,1 km</div>
+    <div class="ticker-item"><strong>Ideální dárek</strong><span class="ticker-sep"></span>Pro každého běžce</div>
+    <div class="ticker-item"><strong>Edice Plzeň 2025</strong><span class="ticker-sep"></span>Limitovaná série</div>
+    <!-- Duplicate for seamless loop -->
+    <div class="ticker-item"><strong>Půlmaraton Plzeň</strong><span class="ticker-sep"></span>21,1 km</div>
+    <div class="ticker-item"><strong>10 km OMEXOM</strong><span class="ticker-sep"></span>Plzeň 2025</div>
+    <div class="ticker-item"><strong>5 km LEAR</strong><span class="ticker-sep"></span>Plzeň 2025</div>
+    <div class="ticker-item"><strong>Osobní rekord</strong><span class="ticker-sep"></span>Navždy tvůj</div>
+    <div class="ticker-item"><strong>Půlmaraton Plzeň</strong><span class="ticker-sep"></span>21,1 km</div>
+    <div class="ticker-item"><strong>Ideální dárek</strong><span class="ticker-sep"></span>Pro každého běžce</div>
+    <div class="ticker-item"><strong>Edice Plzeň 2025</strong><span class="ticker-sep"></span>Limitovaná série</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     STATS BAR
+══════════════════════════════════════ -->
+<section class="stats-bar">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-item reveal">
+        <div class="stat-num">Vzpomínka na celý život</div>
+        <div class="stat-label">nejen screenshot v mobilu</div>
+      </div>
+      <div class="stat-item reveal reveal-delay-1">
+        <div class="stat-num">Hotovo za 2 minuty</div>
+        <div class="stat-label">rychlé vytvoření plakátu</div>
+      </div>
+      <div class="stat-item reveal reveal-delay-2">
+        <div class="stat-num">Originální dárek</div>
+        <div class="stat-label">pro tebe nebo blízké</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     2. VALUE PROPS
+══════════════════════════════════════ -->
+<section class="section value">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="tag">Proč SPORT-STORY</div>
+      <h2>Tvůj výkon si zaslouží víc<br>než screenshot ze Stravy.</h2>
+    </div>
+    <div class="value-grid">
+      <div class="value-card reveal">
+        <span class="value-icon">🏅</span>
+        <h3>Uchovej si výkon navždy</h3>
+        <p>Tvůj závod na zdi. Mapa trasy, tvůj čas, tvoje jméno. Každý den připomínka toho, co jsi dokázal.</p>
+      </div>
+      <div class="value-card reveal reveal-delay-1">
+        <span class="value-icon">⚡</span>
+        <h3>Připomeň si první osobák</h3>
+        <p>Půlmaraton, desítka nebo osobní rekord – zachyť ten moment, na který jsi čekal roky. Zasloužíš si to.</p>
+      </div>
+      <div class="value-card reveal reveal-delay-2">
+        <span class="value-icon">🎁</span>
+        <h3>Ideální jako dárek</h3>
+        <p>Originální a osobní dárek pro každého běžce. Něco, co si sám nekoupí, ale bude mít navždy.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     3. PRODUCT SHOWCASE
+══════════════════════════════════════ -->
+<section class="section showcase">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="tag">Ukázky produktů</div>
+      <h2>Vyber závod. Zvol si styl.</h2>
+      <p>Tři plzeňské závody, každý ve světlé a tmavé variantě.</p>
+    </div>
+
+    <!-- Variant switcher -->
+    <div class="showcase-switcher reveal">
+      <button class="switcher-btn active" data-variant="light">☀ Light</button>
+      <button class="switcher-btn" data-variant="dark">◗ Dark</button>
+    </div>
+
+    <div class="showcase-grid">
+
+      <!-- Půlmaraton -->
+      <a href="https://www.sport-story.cz/zavodni-plakat-v-ramu---pulmaraton-plzen-2026/" target="_blank" rel="noopener" class="showcase-item reveal">
+        <div class="showcase-img-wrap">
+          <div class="showcase-pill">Půlmaraton</div>
+          <div class="showcase-dist">21,1 km</div>
+          <div class="showcase-variant showcase-variant--light">
+            <img
+              class="showcase-img"
+              src="assets/pulmaraton-light%201.png"
+              data-light="assets/pulmaraton-light%201.png"
+              data-dark="assets/pulmaraton-dark%201.png"
+              alt="Půlmaraton Plzeň – light varianta"
+              loading="lazy" />
+            <span class="variant-tag">Light</span>
+          </div>
+        </div>
+        <div class="showcase-info">
+          <div>
+            <div class="showcase-title">Půlmaraton Plzeň</div>
+            <div class="showcase-meta">2 barevné varianty</div>
+          </div>
+          <div class="showcase-arrow">→</div>
+        </div>
+      </a>
+
+      <!-- OMEXOM Krajská desítka -->
+      <a href="https://www.sport-story.cz/zavodni-plakat-v-ramu---omexom-krajska-desitka/" target="_blank" rel="noopener" class="showcase-item reveal reveal-delay-1">
+        <div class="showcase-img-wrap">
+          <div class="showcase-pill">10 km</div>
+          <div class="showcase-dist">10 km</div>
+          <div class="showcase-variant showcase-variant--light">
+            <img
+              class="showcase-img"
+              src="assets/krajskadesitka-light%201.png"
+              data-light="assets/krajskadesitka-light%201.png"
+              data-dark="assets/krajskadesitka-dark%201.png"
+              alt="OMEXOM Krajská desítka – light varianta"
+              loading="lazy" />
+            <span class="variant-tag">Light</span>
+          </div>
+        </div>
+        <div class="showcase-info">
+          <div>
+            <div class="showcase-title">OMEXOM Krajská desítka</div>
+            <div class="showcase-meta">2 barevné varianty</div>
+          </div>
+          <div class="showcase-arrow">→</div>
+        </div>
+      </a>
+
+      <!-- LEAR Krajská pětka -->
+      <a href="https://www.sport-story.cz/zavodni-plakat-v-ramu---lear-krajska-petka/" target="_blank" rel="noopener" class="showcase-item reveal reveal-delay-2">
+        <div class="showcase-img-wrap">
+          <div class="showcase-pill">5 km</div>
+          <div class="showcase-dist">5 km</div>
+          <div class="showcase-variant showcase-variant--light">
+            <img
+              class="showcase-img"
+              src="assets/krajskapetka-light%201.png"
+              data-light="assets/krajskapetka-light%201.png"
+              data-dark="assets/krajskapetka-dark%201.png"
+              alt="LEAR Krajská pětka – light varianta"
+              loading="lazy" />
+            <span class="variant-tag">Light</span>
+          </div>
+        </div>
+        <div class="showcase-info">
+          <div>
+            <div class="showcase-title">LEAR Krajská pětka</div>
+            <div class="showcase-meta">2 barevné varianty</div>
+          </div>
+          <div class="showcase-arrow">→</div>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     4. HOW IT WORKS
+══════════════════════════════════════ -->
+<section class="section how">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="tag">Jak to funguje</div>
+      <h2>Od závodu k plakátu<br>za méně než 2 minuty.</h2>
+    </div>
+    <div class="steps-timeline">
+      <div class="step reveal">
+        <div class="step-icon-wrap">
+          <div class="step-num-glow"></div>
+          <div class="step-num">1</div>
+        </div>
+        <span class="step-emoji">🗺️</span>
+        <h3>Vyber závod</h3>
+        <p>Zvol z dostupných závodů, nebo nahraj vlastní GPX trasu ze Stravy, Garminu nebo Polaru.</p>
+      </div>
+      <div class="step reveal reveal-delay-1">
+        <div class="step-icon-wrap">
+          <div class="step-num-glow"></div>
+          <div class="step-num">2</div>
+        </div>
+        <span class="step-emoji">✏️</span>
+        <h3>Doplň své údaje</h3>
+        <p>Zadej jméno, čas, datum, vzdálenost. Přizpůsob design podle svého vkusu.</p>
+      </div>
+      <div class="step reveal reveal-delay-2">
+        <div class="step-icon-wrap">
+          <div class="step-num-glow"></div>
+          <div class="step-num">3</div>
+        </div>
+        <span class="step-emoji">🏆</span>
+        <h3>Objednej plakát</h3>
+        <p>Digitální verze dostupná okamžitě. Tisk dorazí poštou do 2–4 dnů. Hotovo.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     5. PRODUCT DETAILS
+══════════════════════════════════════ -->
+<section class="section details">
+  <div class="container">
+    <div class="details-grid">
+      <div class="details-visual reveal">
+        <img src="assets/krajskadesitka-light%201.png" alt="Detail personalizovaného závodního plakátu SPORT-STORY" loading="lazy" />
+      </div>
+      <div class="details-content reveal reveal-delay-1">
+        <div class="tag">Co dostaneš</div>
+        <h2>Design, který<br>mluví za tebe</h2>
+        <div class="feature-chips">
+          <div class="feature-chip">
+            <div class="feature-chip-icon">🎨</div>
+            <div class="feature-chip-text">
+              <strong>Minimalistický design</strong>
+              <span>Čistý, moderní styl. Mapa jako hlavní vizuál.</span>
+            </div>
+          </div>
+          <div class="feature-chip">
+            <div class="feature-chip-icon">🗺️</div>
+            <div class="feature-chip-text">
+              <strong>Mapa + zvýrazněná trasa</strong>
+              <span>Přesná rekonstrukce tvé závodní trasy.</span>
+            </div>
+          </div>
+          <div class="feature-chip">
+            <div class="feature-chip-icon">✦</div>
+            <div class="feature-chip-text">
+              <strong>Plná personalizace</strong>
+              <span>Jméno, čas, datum, vzdálenost – vše tvoje.</span>
+            </div>
+          </div>
+          <div class="feature-chip">
+            <div class="feature-chip-icon">📐</div>
+            <div class="feature-chip-text">
+              <strong>Formát A3 – digitál i tisk</strong>
+              <span>Stáhni si PDF nebo nech vytisknout a doručit.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     6. MAIN CTA
+══════════════════════════════════════ -->
+<section id="cta" class="cta-section">
+  <div class="container">
+    <div class="tag reveal">Začni teď</div>
+    <h2 class="reveal">Vytvoř svůj plakát.</h2>
+    <p class="cta-sub reveal">
+      Zabere to méně než 2 minuty
+      <span class="cta-timer">⏱ Okamžitě</span>
+    </p>
+    <div class="btn-wrap reveal">
+      <a href="https://www.sport-story.cz/zavodni-plakat-v-ramu---pulmaraton-plzen-2026/" target="_blank" rel="noopener" class="btn btn-lg">
+        Vytvořit plakát
+        <span class="btn-arrow">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </span>
+      </a>
+    </div>
+    <p class="cta-edition reveal">Edice Plzeň 2025 · Limitovaná série</p>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     7. PROMO
+══════════════════════════════════════ -->
+<section class="offer">
+  <div class="container">
+    <div class="offer-inner reveal">
+      <div class="offer-left">
+        <div class="offer-emoji">🎁</div>
+        <div class="offer-text">
+          <strong>Speciální nabídka pro Plzeň 2025</strong>
+          <span>Použij slevový kód a získej slevu na svůj plakát.</span>
+        </div>
+      </div>
+      <div class="offer-right">
+        <div class="offer-code">PLZEN2025</div>
+        <div class="offer-desc">Zadej při objednávce</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     8. FAQ
+══════════════════════════════════════ -->
+<section class="section faq">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="tag">Časté dotazy</div>
+      <h2>Máš otázky?</h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item reveal">
+        <button class="faq-question" aria-expanded="false">
+          Jak dlouho trvá výroba?
+          <span class="faq-chevron">▾</span>
+        </button>
+        <div class="faq-answer">
+          <p>Digitální verze je dostupná ihned po objednávce – stáhneš si ji okamžitě ve vysokém rozlišení. Tisknutý plakát odesíláme do 2–3 pracovních dnů a doručení trvá obvykle 2–4 dny.</p>
+        </div>
+      </div>
+      <div class="faq-item reveal reveal-delay-1">
+        <button class="faq-question" aria-expanded="false">
+          Můžu použít vlastní trasu?
+          <span class="faq-chevron">▾</span>
+        </button>
+        <div class="faq-answer">
+          <p>Ano! Nahraj libovolný GPX soubor ze Strava, Garmin, Polar nebo jiné aplikace. Vytvoříme plakát z jakékoli trasy – maratonu, triatlonu, cyklovýletu i horského běhu.</p>
+        </div>
+      </div>
+      <div class="faq-item reveal reveal-delay-2">
+        <button class="faq-question" aria-expanded="false">
+          Je plakát i v digitální podobě?
+          <span class="faq-chevron">▾</span>
+        </button>
+        <div class="faq-answer">
+          <p>Ano. Každý plakát je dostupný jako digitální PDF ve vysokém rozlišení vhodném pro tisk. Digitální verzi si objednáš samostatně nebo v kombinaci s tiskem – jak chceš.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     9. FOOTER
+══════════════════════════════════════ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-logo">
+        <svg viewBox="0 0 192 40" xmlns="http://www.w3.org/2000/svg" fill="none" style="height:28px;width:auto;">
+          <path d="M16 1C7.716 1 1 7.716 1 16C1 24 6 31 16 39C26 31 31 24 31 16C31 7.716 24.284 1 16 1Z" fill="#C8FF00"/>
+          <path d="M8 22C8 15 12 12 16 15C20 18 23 14 23 11" stroke="#07090D" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="8" cy="22" r="2.2" fill="#07090D"/>
+          <circle cx="23" cy="11" r="2.2" fill="#07090D"/>
+          <text x="44" y="26.5" font-family="Inter, system-ui, -apple-system, sans-serif" font-weight="900" font-size="17" letter-spacing="-0.4" fill="#F2F4F8">SPORT<tspan fill="#C8FF00">-STORY</tspan></text>
+        </svg>
+      </div>
+      <p class="footer-desc">Personalizované závodní plakáty pro běžce a triatlonisty. Každý výkon si zaslouží svůj příběh.</p>
+      <div class="footer-divider"></div>
+      <div class="footer-contact">Kontakt: <a href="mailto:info@sport-story.cz">info@sport-story.cz</a></div>
+      <div class="footer-copy">© 2025 SPORT-STORY.CZ · Všechna práva vyhrazena</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Navbar scroll state
+  const nav = document.getElementById('site-nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 40);
+  }, { passive: true });
+
+  // FAQ accordion
+  document.querySelectorAll('.faq-question').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const item = btn.closest('.faq-item');
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(el => {
+        el.classList.remove('open');
+        el.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
+      });
+      if (!isOpen) {
+        item.classList.add('open');
+        btn.setAttribute('aria-expanded', 'true');
+      }
+    });
+  });
+
+
+  // Showcase Light/Dark switcher
+  const switcherBtns = document.querySelectorAll('.switcher-btn');
+  switcherBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      switcherBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const variant = btn.dataset.variant;
+      const isLight = variant === 'light';
+      document.querySelectorAll('.showcase-img').forEach(img => {
+        img.style.opacity = '0';
+        setTimeout(() => {
+          img.src = img.dataset[variant];
+          img.style.opacity = '1';
+        }, 150);
+      });
+      document.querySelectorAll('.variant-tag').forEach(tag => {
+        tag.textContent = isLight ? 'Light' : 'Dark';
+      });
+      document.querySelectorAll('.showcase-variant').forEach(v => {
+        v.classList.toggle('showcase-variant--light', isLight);
+        v.classList.toggle('showcase-variant--dark', !isLight);
+      });
+    });
+  });
+
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
