@@ -1784,5 +1784,118 @@
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 </script>
 
+<!-- PASSWORD PROTECTION -->
+<style>
+  #pw-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: #07090D;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Inter', sans-serif;
+  }
+  #pw-box {
+    text-align: center;
+    padding: 48px 40px;
+    background: #11151D;
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 20px;
+    width: 100%;
+    max-width: 360px;
+    margin: 24px;
+  }
+  #pw-box svg { display: block; margin: 0 auto 24px; }
+  #pw-box h2 {
+    font-size: 20px;
+    font-weight: 800;
+    color: #E8EEF6;
+    margin-bottom: 8px;
+    letter-spacing: -0.02em;
+  }
+  #pw-box p {
+    font-size: 14px;
+    color: #68788F;
+    margin-bottom: 28px;
+  }
+  #pw-input {
+    width: 100%;
+    padding: 14px 18px;
+    background: #1E2637;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 10px;
+    color: #E8EEF6;
+    font-size: 15px;
+    font-family: 'Inter', sans-serif;
+    outline: none;
+    text-align: center;
+    letter-spacing: 0.1em;
+    margin-bottom: 12px;
+  }
+  #pw-input:focus { border-color: rgba(200,255,0,0.4); }
+  #pw-btn {
+    width: 100%;
+    padding: 14px;
+    background: #C8FF00;
+    color: #07090D;
+    font-size: 15px;
+    font-weight: 800;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: -0.01em;
+  }
+  #pw-btn:hover { background: #d4ff33; }
+  #pw-error {
+    font-size: 13px;
+    color: #FF5E1A;
+    margin-top: 10px;
+    display: none;
+  }
+</style>
+
+<div id="pw-overlay">
+  <div id="pw-box">
+    <svg viewBox="0 0 192 40" xmlns="http://www.w3.org/2000/svg" fill="none" style="height:32px;width:auto;">
+      <path d="M16 1C7.716 1 1 7.716 1 16C1 24 6 31 16 39C26 31 31 24 31 16C31 7.716 24.284 1 16 1Z" fill="#C8FF00"/>
+      <path d="M8 22C8 15 12 12 16 15C20 18 23 14 23 11" stroke="#07090D" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="8" cy="22" r="2.2" fill="#07090D"/>
+      <circle cx="23" cy="11" r="2.2" fill="#07090D"/>
+      <text x="44" y="26.5" font-family="Inter, system-ui, sans-serif" font-weight="900" font-size="17" letter-spacing="-0.4" fill="#F2F4F8">SPORT<tspan fill="#C8FF00">-STORY</tspan></text>
+    </svg>
+    <h2>Přístup pouze pro pozvané</h2>
+    <p>Zadej heslo pro zobrazení webu</p>
+    <input type="password" id="pw-input" placeholder="••••••••" autocomplete="off" />
+    <button id="pw-btn" onclick="checkPassword()">Vstoupit →</button>
+    <div id="pw-error">Nesprávné heslo. Zkus to znovu.</div>
+  </div>
+</div>
+
+<script>
+  (function() {
+    if (sessionStorage.getItem('ss_auth') === '1') {
+      document.getElementById('pw-overlay').style.display = 'none';
+    }
+  })();
+
+  document.getElementById('pw-input').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') checkPassword();
+  });
+
+  function checkPassword() {
+    const val = document.getElementById('pw-input').value;
+    if (val === 'sportstory2026') {
+      sessionStorage.setItem('ss_auth', '1');
+      document.getElementById('pw-overlay').style.display = 'none';
+    } else {
+      document.getElementById('pw-error').style.display = 'block';
+      document.getElementById('pw-input').value = '';
+      document.getElementById('pw-input').focus();
+    }
+  }
+</script>
+
 </body>
 </html>
